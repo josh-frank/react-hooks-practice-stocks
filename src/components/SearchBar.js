@@ -1,33 +1,48 @@
 import React from "react";
 
-function SearchBar() {
+function SearchBar( { sortAndFilter, setSortAndFilter } ) {
+
+  function updateSortAndFilter( sortAndFilterChangeEvent ) {
+    const updatedSortAndFilter = { ...sortAndFilter };
+    updatedSortAndFilter[ sortAndFilterChangeEvent.target.name ] = sortAndFilterChangeEvent.target.value;
+    setSortAndFilter( updatedSortAndFilter );
+  }
+
   return (
     <div>
-      <strong>Sort by:</strong>
       <label>
+        <input
+          type="radio"
+          value=""
+          name="sort"
+          checked={ !sortAndFilter.sort }
+          onChange={ updateSortAndFilter }
+        />
+        No sort
         <input
           type="radio"
           value="Alphabetically"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={ sortAndFilter.sort === "Alphabetically" }
+          onChange={ updateSortAndFilter }
         />
-        Alphabetically
+        Sort Alphabetically
       </label>
       <label>
         <input
           type="radio"
           value="Price"
           name="sort"
-          checked={null}
-          onChange={null}
+          checked={ sortAndFilter.sort === "Price" }
+          onChange={ updateSortAndFilter }
         />
-        Price
+        Sort by Price
       </label>
       <br />
       <label>
         <strong>Filter:</strong>
-        <select onChange={null}>
+        <select name="filter" onChange={ updateSortAndFilter }>
+          <option value="">None</option>
           <option value="Tech">Tech</option>
           <option value="Sportswear">Sportswear</option>
           <option value="Finance">Finance</option>
@@ -35,6 +50,7 @@ function SearchBar() {
       </label>
     </div>
   );
+
 }
 
 export default SearchBar;
